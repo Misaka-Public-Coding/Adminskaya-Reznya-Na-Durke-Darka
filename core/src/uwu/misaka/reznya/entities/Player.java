@@ -31,7 +31,6 @@ public class Player {
         return Reznya.world.getTile(x-1,y).canStay();
     }
     public boolean canGoRight(){
-        System.out.println("TYPED");
         if(x==Reznya.world.world_x_size-1)return false;
         return Reznya.world.getTile(x+1,y).canStay();
     }
@@ -86,7 +85,7 @@ public class Player {
     }
 
     public static Player player(int x,int y, String name){
-        Player rtn =  new Player(x,y,name);
+        Player rtn = new Player(x,y,name);
         rtn.isYou=true;
         return rtn;
     }

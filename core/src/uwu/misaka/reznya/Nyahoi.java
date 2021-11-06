@@ -1,6 +1,7 @@
 package uwu.misaka.reznya;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
@@ -11,6 +12,8 @@ public class Nyahoi {
 
     public static Array<Player> movementPlayers = new Array<>();
     public static boolean canMovement = true;
+
+    public static BitmapFont font = new BitmapFont();
 
     public static void updateMovement(){
         if(movementPlayers.size!=0){
@@ -68,6 +71,6 @@ public class Nyahoi {
         int final_x= leftOffset+p.map_x;
         TextureRegion rg = new TextureRegion(ContentLoader.player_example);
         b.draw(rg,final_x,p.map_y,Nyahoi.tileSize/2f,Nyahoi.tileSize/2f,Nyahoi.tileSize,Nyahoi.tileSize,1,1,p.angle);
-
+        font.draw(b,p.name,final_x, p.map_y+(9*Nyahoi.tileSize/10f),Nyahoi.tileSize,0,false);
     }
 }

@@ -15,6 +15,37 @@ public class NyaReader implements InputProcessor {
 
     @Override
     public boolean keyTyped(char character) {
+        if(Nyahoi.canMovement){
+        if(character == 119){
+            Nyahoi.players.forEach(p->{
+                if(p.isYou&&p.canGoUp()){
+                    p.goUp();
+                }
+            });
+        }
+        if(character == 115){
+            Nyahoi.players.forEach(p->{
+                if(p.isYou&&p.canGoDown()){
+                    p.goDown();
+                }
+            });
+        }
+        if(character == 97){
+            Nyahoi.players.forEach(p->{
+                if(p.isYou&&p.canGoLeft()){
+                    p.goLeft();
+                }
+            });
+        }
+        if(character == 100){
+            System.out.println("TYPED D");
+            Nyahoi.players.forEach(p->{
+                if(p.isYou&&p.canGoRight()){
+                    p.goRight();
+                }
+            });
+        }
+        }
         return false;
     }
 

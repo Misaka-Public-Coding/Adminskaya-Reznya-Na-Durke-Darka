@@ -1,6 +1,7 @@
 package uwu.misaka.reznya;
 
 import com.badlogic.gdx.InputProcessor;
+import uwu.misaka.reznya.entities.Bullet;
 
 public class NyaReader implements InputProcessor {
     @Override
@@ -50,6 +51,12 @@ public class NyaReader implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        System.out.println(screenX+" "+screenY);
+        Nyahoi.players.forEach(p->{
+            if(p.isYou){
+                new Bullet(p,p.x,p.y,screenX,screenY);
+            }
+        });
         return false;
     }
 

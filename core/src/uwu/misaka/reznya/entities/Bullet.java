@@ -1,14 +1,18 @@
 package uwu.misaka.reznya.entities;
 
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.Camera;
 import uwu.misaka.reznya.Nyahoi;
 import uwu.misaka.reznya.Reznya;
 
+import static java.lang.Math.sqrt;
+import static uwu.misaka.reznya.Nyahoi.tileSize;
+
 public class Bullet {
-    public static int maxRange = 4 * Nyahoi.tileSize;
+    public static int maxRange = 4 * tileSize;
 
     Player author;
     float angle;
+    float facing_angle;
     int target_x;
     int target_y;
     int x;
@@ -16,8 +20,10 @@ public class Bullet {
 
     public Bullet(Player author,int tile_x,int tile_y,int click_x,int click_y){
         this.author=author;
-        int x_d = click_x-(tile_x*Nyahoi.tileSize+Nyahoi.tileSize/2);
-        int y_d = (Reznya.last_y_size-click_y)-(tile_y*Nyahoi.tileSize+Nyahoi.tileSize/2);
+        x=tile_x* tileSize+ tileSize/2;
+        y=tile_y* tileSize+ tileSize/2;
+        double x_d = click_x-(((tile_x* tileSize+ tileSize/2f)/Reznya.camera.zoom+(Reznya.last_x_size-640)/4f));
+        double y_d = (Reznya.last_y_size-click_y)-((tile_y* tileSize+ tileSize/2f)/Reznya.camera.zoom);
         if(x_d==0||y_d==0){
         if(x_d==0){
             if(y_d>0){
@@ -44,13 +50,13 @@ public class Bullet {
             angle=360+angle;
         }
         author.target_angle=angle;
+        facing_angle=angle;
 
         angle = angle+90;
 
         if(angle>360){
             angle = angle-360;
         }
-        this.angle=angle;
 
         System.out.println(angle+"||"+ author.target_angle);
         Nyahoi.movementPlayers.add(author);

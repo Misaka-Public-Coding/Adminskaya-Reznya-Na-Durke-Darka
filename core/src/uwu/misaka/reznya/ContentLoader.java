@@ -7,4 +7,5 @@ public class ContentLoader {
     public static final Texture floor_wall = new Texture("textures/floors/floor_wall.png");
     public static final Texture floor_water = new Texture("textures/floors/floor_water.png");
     public static final Texture player_example = new Texture("textures/players/example.png");
+    public static final Texture bullet_example = new Texture("textures/bullets/example.png");
 }

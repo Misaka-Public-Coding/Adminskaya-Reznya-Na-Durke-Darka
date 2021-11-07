@@ -51,12 +51,13 @@ public class NyaReader implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        System.out.println(screenX+" "+screenY);
-        Nyahoi.players.forEach(p->{
-            if(p.isYou){
-                new Bullet(p,p.x,p.y,screenX,screenY);
-            }
-        });
+        if(Nyahoi.canMovement){
+            Nyahoi.players.forEach(p->{
+                if(p.isYou){
+                    new Bullet(p,p.x,p.y,screenX,screenY);
+                }
+            });
+        }
         return false;
     }
 

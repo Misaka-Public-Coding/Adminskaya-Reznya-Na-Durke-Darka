@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import uwu.misaka.reznya.entities.Bullet;
 import uwu.misaka.reznya.entities.Player;
 
 public class Reznya extends ApplicationAdapter{
@@ -38,6 +39,9 @@ public class Reznya extends ApplicationAdapter{
 		}
 		for(Player p : Nyahoi.players){
 			Nyahoi.drawPlayer(batch,p);
+		}
+		for(Bullet b : Nyahoi.movementBullets){
+			Nyahoi.drawBullet(batch,b);
 		}
 		batch.end();
 	}

@@ -1,9 +1,10 @@
-package uwu.misaka.reznya;
+package uwu.misaka.reznya.service.input;
 
 import com.badlogic.gdx.InputProcessor;
+import uwu.misaka.reznya.Nyahoi;
 import uwu.misaka.reznya.entities.Bullet;
 
-public class NyaReader implements InputProcessor {
+public class GameReader implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         return false;

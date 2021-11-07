@@ -1,4 +1,4 @@
-package uwu.misaka.reznya;
+package uwu.misaka.reznya.service;
 
 import com.badlogic.gdx.graphics.Texture;
 

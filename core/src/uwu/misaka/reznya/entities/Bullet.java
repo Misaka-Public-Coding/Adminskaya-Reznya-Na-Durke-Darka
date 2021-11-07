@@ -1,14 +1,10 @@
 package uwu.misaka.reznya.entities;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.utils.Array;
-import uwu.misaka.reznya.Floor;
 import uwu.misaka.reznya.Nyahoi;
 import uwu.misaka.reznya.Reznya;
-import uwu.misaka.reznya.Tile;
+import uwu.misaka.reznya.world.Tile;
 
-
-import static java.lang.Math.abs;
 import static java.lang.Math.sqrt;
 import static uwu.misaka.reznya.Nyahoi.*;
 
@@ -105,7 +101,6 @@ public class Bullet {
             angle = angle-360;
         }
 
-        System.out.println(angle+"||"+ author.target_angle);
         Nyahoi.movementPlayers.add(author);
         Nyahoi.movementBullets.add(this);
     }

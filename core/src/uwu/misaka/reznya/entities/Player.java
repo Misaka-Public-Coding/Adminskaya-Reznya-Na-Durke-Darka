@@ -2,7 +2,6 @@ package uwu.misaka.reznya.entities;
 
 import uwu.misaka.reznya.Nyahoi;
 import uwu.misaka.reznya.Reznya;
-import uwu.misaka.reznya.World;
 
 public class Player {
     public boolean isYou = false;

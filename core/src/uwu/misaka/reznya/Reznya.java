@@ -1,13 +1,12 @@
 package uwu.misaka.reznya;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import uwu.misaka.reznya.entities.Bullet;
-import uwu.misaka.reznya.entities.Player;
+import uwu.misaka.reznya.world.World;
+
+import static uwu.misaka.reznya.Nyahoi.loadMainMenu;
 
 public class Reznya extends ApplicationAdapter{
 	public static SpriteBatch batch;
@@ -19,12 +18,10 @@ public class Reznya extends ApplicationAdapter{
 	
 	@Override
 	public void create () {
-		Player.player(1,0,"hentaichan");
-		world=new World();
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false,800,400);
-		Gdx.input.setInputProcessor(new NyaReader());
+		camera.setToOrtho(false, 800, 400);
+		loadMainMenu();
 	}
 
 	@Override
@@ -32,17 +29,8 @@ public class Reznya extends ApplicationAdapter{
 		camera.update();
 		batch.setProjectionMatrix(camera.combined);
 		ScreenUtils.clear(0, 0, 0, 1);
-		Nyahoi.updateMovement();
 		batch.begin();
-		for(Tile t:world.tiles){
-			Nyahoi.drawWithOffset(batch,t.texture(),t.draw_x(),t.draw_y());
-		}
-		for(Player p : Nyahoi.players){
-			Nyahoi.drawPlayer(batch,p);
-		}
-		for(Bullet b : Nyahoi.movementBullets){
-			Nyahoi.drawBullet(batch,b);
-		}
+		Nyahoi.renderActions.run();
 		batch.end();
 	}
 	

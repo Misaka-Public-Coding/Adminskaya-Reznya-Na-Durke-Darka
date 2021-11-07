@@ -1,6 +1,7 @@
-package uwu.misaka.reznya;
+package uwu.misaka.reznya.world;
 
 import com.badlogic.gdx.graphics.Texture;
+import uwu.misaka.reznya.Nyahoi;
 import uwu.misaka.reznya.entities.Player;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public class Tile {
     int tile_y;
 
     public int draw_x(){
-        return tile_x*Nyahoi.tileSize;
+        return tile_x * Nyahoi.tileSize;
     }
     public int draw_y(){
         return tile_y*Nyahoi.tileSize;

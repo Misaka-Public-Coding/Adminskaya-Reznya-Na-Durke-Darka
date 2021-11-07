@@ -1,8 +1,8 @@
-package uwu.misaka.reznya;
+package uwu.misaka.reznya.world;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Collections;
+import uwu.misaka.reznya.service.ContentLoader;
 
 public class Floor {
     boolean isSolid;

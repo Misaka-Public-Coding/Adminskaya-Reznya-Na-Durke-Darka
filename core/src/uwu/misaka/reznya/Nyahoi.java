@@ -103,6 +103,7 @@ public class Nyahoi {
 
     public static Runnable renderMainMenu = () -> {
         ScreenUtils.clear(0, 0, 0, 1);
+        batch.draw(ContentLoader.menu_banner, ((((Reznya.last_x_size - 640) / 4f) * Reznya.camera.zoom)), (last_y_size - (ContentLoader.menu_banner.getHeight() / 2f)) * camera.zoom, (ContentLoader.menu_banner.getWidth() / 2f) * camera.zoom, (ContentLoader.menu_banner.getHeight() / 2f) * camera.zoom);
         font.draw(batch, playerName, ((last_x_size - getTextWidth(font, playerName)) / 2f) * camera.zoom, last_y_size / 2f * camera.zoom);
     };
 

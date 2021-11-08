@@ -29,16 +29,15 @@ public class MainMenuReader implements InputProcessor {
         Gdx.input.getTextInput(new Input.TextInputListener() {
             @Override
             public void input(String text) {
-                if (text.length() <= 3) text = "Пешка овлера";
+                if (text.length() <= 3) text = "Peshka Owlera";
                 Nyahoi.playerName = text;
-                Nyahoi.field.setText(text);
             }
 
             @Override
             public void canceled() {
                 return;
             }
-        }, "Хто ты", "Пешка овлера", "Типа ник");
+        }, "Хто ты", "", "Типа ник");
         return false;
     }
 

@@ -1,12 +1,11 @@
 package uwu.misaka.reznya;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import uwu.misaka.reznya.entities.Bullet;
@@ -17,8 +16,7 @@ import uwu.misaka.reznya.service.input.MainMenuReader;
 import uwu.misaka.reznya.world.Tile;
 import uwu.misaka.reznya.world.World;
 
-import static uwu.misaka.reznya.Reznya.batch;
-import static uwu.misaka.reznya.Reznya.world;
+import static uwu.misaka.reznya.Reznya.*;
 
 public class Nyahoi {
     public static Array<Player> players = new Array<>();
@@ -31,15 +29,17 @@ public class Nyahoi {
     public static boolean canMovement = true;
 
     public static BitmapFont font = new BitmapFont();
+    public static GlyphLayout fontSizer = new GlyphLayout();
+
     public static Runnable renderActions = () -> ScreenUtils.clear(0, 0, 0, 1);
 
     public static void updateMovement() {
-        if(movementPlayers.size!=0){
+        if (movementPlayers.size != 0) {
             canMovement = false;
             Array<Player> movementEnd = new Array<>();
-            movementPlayers.forEach(p->{
-                if(p.angle!=p.target_angle){
-                    if(p.angle>p.target_angle){
+            movementPlayers.forEach(p -> {
+                if (p.angle != p.target_angle) {
+                    if (p.angle > p.target_angle) {
                         if(p.angle-p.target_angle>2){
                             p.angle-=2;
                         }else{
@@ -89,15 +89,10 @@ public class Nyahoi {
     public static void drawWithOffset(SpriteBatch b, Texture t,int x,int y){
         int leftOffset =(int)((Reznya.last_x_size-640)/4*Reznya.camera.zoom);
         int final_x= leftOffset+x;
-        b.draw(t,final_x,y,tileSize,tileSize);
+        b.draw(t, final_x, y, tileSize, tileSize);
     }
-    public static void drawPlayer(SpriteBatch b, Player p){
-        int leftOffset =(int)((Reznya.last_x_size-640)/4*Reznya.camera.zoom);
-        int final_x= leftOffset+p.map_x;
-        TextureRegion rg = new TextureRegion(ContentLoader.player_example);
-        b.draw(rg, final_x, p.map_y, Nyahoi.tileSize / 2f, Nyahoi.tileSize / 2f, Nyahoi.tileSize, Nyahoi.tileSize, 1, 1, p.angle);
-        font.draw(b, p.name, final_x, p.map_y + (9 * Nyahoi.tileSize / 10f), Nyahoi.tileSize, 0, false);
-    }
+
+    public static String playerName = "peshka owlera";
 
     public static void drawBullet(SpriteBatch b, Bullet bullet) {
         int leftOffset = (int) ((Reznya.last_x_size - 640) / 4 * Reznya.camera.zoom);
@@ -105,6 +100,11 @@ public class Nyahoi {
         TextureRegion rg = new TextureRegion(ContentLoader.bullet_example);
         b.draw(rg, final_x, bullet.y - (tileSize / 2f), Nyahoi.tileSize / 2f, Nyahoi.tileSize / 2f, Nyahoi.tileSize, Nyahoi.tileSize, 1, 1, bullet.facing_angle);
     }
+
+    public static Runnable renderMainMenu = () -> {
+        ScreenUtils.clear(0, 0, 0, 1);
+        font.draw(batch, playerName, ((last_x_size - getTextWidth(font, playerName)) / 2f) * camera.zoom, last_y_size / 2f * camera.zoom);
+    };
 
     public static Runnable renderGame = () -> {
         Nyahoi.updateMovement();
@@ -118,13 +118,25 @@ public class Nyahoi {
             Nyahoi.drawBullet(batch, b);
         }
     };
-    public static String playerName = "Nya HOi";
-    static TextField.TextFieldStyle s = new TextField.TextFieldStyle(font, new Color(0, 1, 0, 1), null, null, null);
-    public static TextField field = new TextField("None", s);
-    public static Runnable renderMainMenu = () -> {
-        ScreenUtils.clear(0, 0, 0, 1);
-        field.draw(batch, 1f);
-    };
+
+    public static void drawPlayer(SpriteBatch b, Player p) {
+        int leftOffset = (int) ((Reznya.last_x_size - 640) / 4 * Reznya.camera.zoom);
+        int final_x = leftOffset + p.map_x;
+        TextureRegion rg = new TextureRegion(ContentLoader.player_example);
+        b.draw(rg, final_x, p.map_y, Nyahoi.tileSize / 2f, Nyahoi.tileSize / 2f, Nyahoi.tileSize, Nyahoi.tileSize, 1, 1, p.angle);
+        if (p.isYou) {
+            font.setColor(0, 1, 0, 1);
+        } else {
+            font.setColor(1, 0, 0, 1);
+        }
+        font.draw(b, p.name, final_x + (tileSize / 2f) - (getTextWidth(font, p.name) / 2f), p.map_y + (9 * Nyahoi.tileSize / 10f));
+        font.setColor(1, 1, 1, 1);
+    }
+
+    public static int getTextWidth(BitmapFont bf, String t) {
+        fontSizer.setText(bf, t);
+        return (int) fontSizer.width;
+    }
 
     public static void loadGameRender() {
         world = new World();

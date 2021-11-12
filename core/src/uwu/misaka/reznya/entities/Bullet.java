@@ -108,7 +108,7 @@ public class Bullet {
     public void collide(){
         Array<Player> toRemove = new Array<>();
         for(Player p:players){
-            if(p!=author&&this.x*tileSize+(tileSize/2)>p.map_x&&this.x*tileSize+(tileSize/2)<p.map_x+tileSize&&this.y*tileSize+(tileSize/2)>p.map_y&&this.y*tileSize+(tileSize/2)<p.map_y+tileSize){
+            if (p != author && this.x < p.map_x + tileSize && this.x > p.map_x && this.y > p.map_y && this.y < p.map_y + tileSize) {
                 toRemove.add(p);
                 Nyahoi.bulletsToRm.add(this);
             }

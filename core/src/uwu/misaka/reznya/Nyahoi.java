@@ -142,6 +142,12 @@ public class Nyahoi {
     public static void loadGameRender() {
         world = new World();
         Player.player(1, 0, playerName);
+        new Player(0, 2, "ICHI");
+        new Player(1, 5, "NI");
+        new Player(1, 5, "SAN");
+        new Player(6, 0, "NYA");
+        new Player(6, 5, "Arigato");
+        new Player(7, 3, "Nyahoi");
         Gdx.input.setInputProcessor(new GameReader());
         renderActions = renderGame;
     }

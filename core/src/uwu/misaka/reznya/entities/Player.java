@@ -15,15 +15,19 @@ public class Player {
     public float angle;
     public float target_angle;
 
+    public boolean shouted = false;
+    public boolean moved = false;
+
     public String name;
 
-    public boolean canGoDown(){
-        if(y==0)return false;
-        return Reznya.world.getTile(x,y-1).canStay();
+    public boolean canGoDown() {
+        if (y == 0) return false;
+        return Reznya.world.getTile(x, y - 1).canStay();
     }
-    public boolean canGoUp(){
-        if(y==Reznya.world.world_y_size-1)return false;
-        return Reznya.world.getTile(x,y+1).canStay();
+
+    public boolean canGoUp() {
+        if (y == Reznya.world.world_y_size - 1) return false;
+        return Reznya.world.getTile(x, y + 1).canStay();
     }
     public boolean canGoLeft(){
         if(x==0)return false;
@@ -42,6 +46,7 @@ public class Player {
             }
             target_angle=0;
             Nyahoi.movementPlayers.add(this);
+            moved = true;
         }
     }
     public void goDown(){
@@ -49,6 +54,7 @@ public class Player {
             y=y-1;
             target_angle=180;
             Nyahoi.movementPlayers.add(this);
+            moved = true;
         }
     }
     public void goLeft(){
@@ -56,6 +62,7 @@ public class Player {
             target_angle=90;
             x=x-1;
             Nyahoi.movementPlayers.add(this);
+            moved = true;
         }
     }
     public void goRight(){
@@ -66,6 +73,7 @@ public class Player {
             }
             target_angle=270;
             Nyahoi.movementPlayers.add(this);
+            moved = true;
         }
     }
 

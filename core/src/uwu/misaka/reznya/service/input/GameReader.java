@@ -20,28 +20,28 @@ public class GameReader implements InputProcessor {
         if(Nyahoi.canMovement){
         if(character == 119||character==1094){
             Nyahoi.players.forEach(p->{
-                if(p.isYou&&p.canGoUp()){
+                if (p.isYou && p.canGoUp() && !p.moved) {
                     p.goUp();
                 }
             });
         }
         if(character == 115||character==1099){
             Nyahoi.players.forEach(p->{
-                if(p.isYou&&p.canGoDown()){
+                if (p.isYou && p.canGoDown() && !p.moved) {
                     p.goDown();
                 }
             });
         }
         if(character == 97||character==1092){
             Nyahoi.players.forEach(p->{
-                if(p.isYou&&p.canGoLeft()){
+                if (p.isYou && p.canGoLeft() && !p.moved) {
                     p.goLeft();
                 }
             });
         }
         if(character == 100||character==1074){
             Nyahoi.players.forEach(p->{
-                if(p.isYou&&p.canGoRight()){
+                if (p.isYou && p.canGoRight() && !p.moved) {
                     p.goRight();
                 }
             });
@@ -54,8 +54,8 @@ public class GameReader implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if(Nyahoi.canMovement){
             Nyahoi.players.forEach(p->{
-                if(p.isYou){
-                    new Bullet(p,p.x,p.y,screenX,screenY);
+                if (p.isYou && !p.shouted) {
+                    new Bullet(p, p.x, p.y, screenX, screenY);
                 }
             });
         }

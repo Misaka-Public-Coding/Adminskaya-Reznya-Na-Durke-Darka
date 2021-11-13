@@ -103,6 +103,7 @@ public class Bullet {
 
         Nyahoi.movementPlayers.add(author);
         Nyahoi.movementBullets.add(this);
+        author.shouted = true;
     }
 
     public void collide(){

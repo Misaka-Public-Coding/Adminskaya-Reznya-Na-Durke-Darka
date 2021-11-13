@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import uwu.misaka.reznya.entities.Bullet;
 import uwu.misaka.reznya.entities.Player;
 import uwu.misaka.reznya.service.ContentLoader;
+import uwu.misaka.reznya.service.GameLogic;
 import uwu.misaka.reznya.service.input.GameReader;
 import uwu.misaka.reznya.service.input.MainMenuReader;
 import uwu.misaka.reznya.world.Tile;
@@ -108,6 +109,7 @@ public class Nyahoi {
     };
 
     public static Runnable renderGame = () -> {
+        GameLogic.logicTurn();
         Nyahoi.updateMovement();
         for (Tile t : world.tiles) {
             Nyahoi.drawWithOffset(batch, t.texture(), t.draw_x(), t.draw_y());
@@ -150,6 +152,7 @@ public class Nyahoi {
         new Player(7, 3, "Nyahoi");
         Gdx.input.setInputProcessor(new GameReader());
         renderActions = renderGame;
+        GameLogic.initLogic();
     }
 
     public static void loadMainMenu() {

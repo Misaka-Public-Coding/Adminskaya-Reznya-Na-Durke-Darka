@@ -34,11 +34,14 @@ public class GameLogic {
 
     public static void logicTurn() {
         //todo проверка на движение объектов
+        if (!lastPlayer.isYou) {
+            Nyahoi.makeABotMove(lastPlayer);
+        }
         if (lastPlayer.moved && lastPlayer.shouted && Nyahoi.canMovement) {
             int nyahoi = playersInRound.indexOf(lastPlayer, false);
             while (true) {
                 nyahoi++;
-                if (playersInRound.indexOf(lastPlayer, false) >= playersInRound.size) {
+                if (nyahoi >= playersInRound.size) {
                     nyahoi = 0;
                 }
                 if (Nyahoi.players.contains(playersInRound.get(nyahoi), false)) {

@@ -25,13 +25,20 @@ public class World {
     public Tile getTile(int x, int y){
         if(x<0||y<0||x>=world_x_size||y>=world_y_size){
             throw new IllegalArgumentException("Out of bounds");
-        }else{
-            for(Tile e:tiles){
-                if(e.tile_x==x&&e.tile_y==y){
+        } else {
+            for (Tile e : tiles) {
+                if (e.tile_x == x && e.tile_y == y) {
                     return e;
                 }
             }
             return null;
         }
+    }
+
+    public boolean canStay(int x, int y) {
+        if (x < 0 || y < 0 || x >= world_x_size || y >= world_y_size) {
+            return false;
+        }
+        return getTile(x, y).canStay();
     }
 }

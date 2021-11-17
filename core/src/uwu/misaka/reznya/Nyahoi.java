@@ -35,16 +35,41 @@ public class Nyahoi {
     public static Runnable renderActions = () -> ScreenUtils.clear(0, 0, 0, 1);
 
     public static void updateMovement() {
-        if (movementPlayers.size != 0) {
+        if (movementBullets.size != 0) {
+            canMovement = false;
+            movementBullets.forEach(b -> {
+                Player p = b.author;
+                if (p.angle != b.facing_angle) {
+                    if (p.angle > b.facing_angle) {
+                        if (p.angle - b.facing_angle > 2) {
+                            p.angle -= 2;
+                        } else {
+                            p.angle = b.facing_angle;
+                        }
+                    } else {
+                        if (b.facing_angle - p.angle > 2) {
+                            p.angle += 2;
+                        } else {
+                            p.angle = b.facing_angle;
+                        }
+                    }
+                    return;
+                }
+                b.collide();
+                b.move();
+            });
+            movementBullets.removeAll(bulletsToRm, false);
+        }
+        if (movementPlayers.size != 0 && movementBullets.size == 0) {
             canMovement = false;
             Array<Player> movementEnd = new Array<>();
             movementPlayers.forEach(p -> {
                 if (p.angle != p.target_angle) {
                     if (p.angle > p.target_angle) {
-                        if(p.angle-p.target_angle>2){
-                            p.angle-=2;
-                        }else{
-                            p.angle=p.target_angle;
+                        if (p.angle - p.target_angle > 2) {
+                            p.angle -= 2;
+                        } else {
+                            p.angle = p.target_angle;
                         }
                     }else{
                         if(p.target_angle-p.angle>2){
@@ -64,26 +89,17 @@ public class Nyahoi {
                 if(p.y*Nyahoi.tileSize > p.map_y){
                     p.map_y++;
                 }
-                if(p.y*Nyahoi.tileSize < p.map_y){
+                if (p.y * Nyahoi.tileSize < p.map_y) {
                     p.map_y--;
                 }
-                if(p.x*Nyahoi.tileSize == p.map_x&&p.y*Nyahoi.tileSize == p.map_y&&p.angle==p.target_angle){
+                if (p.x * Nyahoi.tileSize == p.map_x && p.y * Nyahoi.tileSize == p.map_y && p.angle == p.target_angle) {
                     movementEnd.add(p);
                 }
             });
-            movementEnd.forEach(p->movementPlayers.removeValue(p,true));
+            movementEnd.forEach(p -> movementPlayers.removeValue(p, true));
         }
-        if(movementPlayers.size==0){
-            if(movementBullets.size==0){
-                canMovement = true;
-            }else {
-                canMovement = false;
-                movementBullets.forEach(b -> {
-                    b.collide();
-                    b.move();
-                });
-                movementBullets.removeAll(bulletsToRm, false);
-            }
+        if (movementBullets.size == 0 && movementPlayers.size == 0) {
+            canMovement = true;
         }
     }
 
@@ -146,10 +162,9 @@ public class Nyahoi {
         Player.player(1, 0, playerName);
         new Player(0, 2, "ICHI");
         new Player(1, 5, "NI");
-        new Player(1, 5, "SAN");
-        new Player(6, 0, "NYA");
-        new Player(6, 5, "Arigato");
-        new Player(7, 3, "Nyahoi");
+        new Player(6, 0, "SAN");
+        new Player(6, 5, "NYA");
+        new Player(7, 3, "Arigato");
         Gdx.input.setInputProcessor(new GameReader());
         renderActions = renderGame;
         GameLogic.initLogic();
@@ -158,6 +173,86 @@ public class Nyahoi {
     public static void loadMainMenu() {
         Gdx.input.setInputProcessor(new MainMenuReader());
         renderActions = renderMainMenu;
+    }
+
+    public static void makeABotMove(Player p) {
+        if (p.isYou) {
+            return;
+        }
+        Player target = null;
+        for (Player t : players) {
+            if (length(t, p) < Bullet.maxRange * Bullet.maxRange && t != p) {
+                target = t;
+                break;
+            }
+        }
+        if (target == null && !p.moved && canMovement) {
+            boolean left = world.canStay(p.x - 1, p.y);
+            boolean right = world.canStay(p.x + 1, p.y);
+            boolean up = world.canStay(p.x, p.y + 1);
+            boolean down = world.canStay(p.x, p.y - 1);
+            while (true) {
+                int i = (int) (Math.random() * 4);
+                if (i == 0 && left) {
+                    p.goLeft();
+                    break;
+                }
+                if (i == 1 && right) {
+                    p.goRight();
+                    break;
+                }
+                if (i == 2 && up) {
+                    p.goUp();
+                    break;
+                }
+                if (i == 3 && down) {
+                    p.goDown();
+                    break;
+                }
+                System.out.println(p.name + " " + i + " " + left + " " + right + " " + up + " " + down + " ");
+            }
+        }
+        if (target != null && !p.shouted && canMovement) {
+            System.out.println(p.name + "|" + target.name);
+            new Bullet(p, target);
+        }
+        if (!p.moved && canMovement) {
+            boolean left = world.canStay(p.x - 1, p.y);
+            boolean right = world.canStay(p.x + 1, p.y);
+            boolean up = world.canStay(p.x, p.y + 1);
+            boolean down = world.canStay(p.x, p.y - 1);
+            while (true) {
+                int i = (int) (Math.random() * 4);
+                if (i == 0 && left) {
+                    p.goLeft();
+                    break;
+                }
+                if (i == 1 && right) {
+                    p.goRight();
+                    break;
+                }
+                if (i == 2 && up) {
+                    p.goUp();
+                    break;
+                }
+                if (i == 3 && down) {
+                    p.goDown();
+                    break;
+                }
+                System.out.println(p.name + " " + i + " " + left + " " + right + " " + up + " " + down + " ");
+            }
+        }
+        if (canMovement && !p.shouted) {
+            p.shouted = true;
+        }
+    }
+
+    public static int length(Player a, Player b) {
+        int x1 = a.x * tileSize;
+        int x2 = b.x * tileSize;
+        int y1 = a.x * tileSize;
+        int y2 = b.y * tileSize;
+        return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
     }
 
 }

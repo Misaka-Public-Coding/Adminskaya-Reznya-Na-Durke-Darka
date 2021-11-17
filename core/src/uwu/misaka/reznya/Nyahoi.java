@@ -176,7 +176,7 @@ public class Nyahoi {
     }
 
     public static void makeABotMove(Player p) {
-        if (p.isYou) {
+        if (p.isYou || !players.contains(p, false)) {
             return;
         }
         Player target = null;

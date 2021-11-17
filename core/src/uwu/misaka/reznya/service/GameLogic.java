@@ -37,7 +37,7 @@ public class GameLogic {
         if (!lastPlayer.isYou) {
             Nyahoi.makeABotMove(lastPlayer);
         }
-        if (lastPlayer.moved && lastPlayer.shouted && Nyahoi.canMovement) {
+        if ((lastPlayer.moved && lastPlayer.shouted && Nyahoi.canMovement) || !Nyahoi.players.contains(lastPlayer, false)) {
             int nyahoi = playersInRound.indexOf(lastPlayer, false);
             while (true) {
                 nyahoi++;

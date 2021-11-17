@@ -110,8 +110,8 @@ public class Bullet {
         this.author = author;
         x = author.x * tileSize + tileSize / 2;
         y = author.y * tileSize + tileSize / 2;
-        double x_d = target_x - author.x;
-        double y_d = target_y - author.y;
+        double x_d = target.x - author.x;
+        double y_d = target.y - author.y;
         if (x_d == 0 || y_d == 0) {
             if (x_d == 0) {
                 if (y_d > 0) {

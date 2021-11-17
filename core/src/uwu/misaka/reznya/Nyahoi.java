@@ -12,6 +12,7 @@ import uwu.misaka.reznya.entities.Bullet;
 import uwu.misaka.reznya.entities.Player;
 import uwu.misaka.reznya.service.ContentLoader;
 import uwu.misaka.reznya.service.GameLogic;
+import uwu.misaka.reznya.service.input.GameEndMenuReader;
 import uwu.misaka.reznya.service.input.GameReader;
 import uwu.misaka.reznya.service.input.MainMenuReader;
 import uwu.misaka.reznya.world.Tile;
@@ -138,6 +139,17 @@ public class Nyahoi {
         }
     };
 
+    public static Runnable renderWinMenu = () -> {
+        ScreenUtils.clear(0, 0, 0, 1);
+        batch.draw(ContentLoader.menu_banner, ((((Reznya.last_x_size - 640) / 4f) * Reznya.camera.zoom)), (last_y_size - (ContentLoader.menu_banner.getHeight() / 2f)) * camera.zoom, (ContentLoader.menu_banner.getWidth() / 2f) * camera.zoom, (ContentLoader.menu_banner.getHeight() / 2f) * camera.zoom);
+        font.draw(batch, "You win nya~~~", ((last_x_size - getTextWidth(font, playerName)) / 2f) * camera.zoom, last_y_size / 2f * camera.zoom);
+    };
+    public static Runnable renderLoseMenu = () -> {
+        ScreenUtils.clear(0, 0, 0, 1);
+        batch.draw(ContentLoader.menu_banner, ((((Reznya.last_x_size - 640) / 4f) * Reznya.camera.zoom)), (last_y_size - (ContentLoader.menu_banner.getHeight() / 2f)) * camera.zoom, (ContentLoader.menu_banner.getWidth() / 2f) * camera.zoom, (ContentLoader.menu_banner.getHeight() / 2f) * camera.zoom);
+        font.draw(batch, "You lose BAKA!!!!!!", ((last_x_size - getTextWidth(font, playerName)) / 2f) * camera.zoom, last_y_size / 2f * camera.zoom);
+    };
+
     public static void drawPlayer(SpriteBatch b, Player p) {
         int leftOffset = (int) ((Reznya.last_x_size - 640) / 4 * Reznya.camera.zoom);
         int final_x = leftOffset + p.map_x;
@@ -159,6 +171,7 @@ public class Nyahoi {
 
     public static void loadGameRender() {
         world = new World();
+        players = new Array<>();
         Player.player(1, 0, playerName);
         new Player(0, 2, "ICHI");
         new Player(1, 5, "NI");
@@ -173,6 +186,16 @@ public class Nyahoi {
     public static void loadMainMenu() {
         Gdx.input.setInputProcessor(new MainMenuReader());
         renderActions = renderMainMenu;
+    }
+
+    public static void loadWinMenu() {
+        Gdx.input.setInputProcessor(new GameEndMenuReader());
+        renderActions = renderWinMenu;
+    }
+
+    public static void loadLoseMenu() {
+        Gdx.input.setInputProcessor(new GameEndMenuReader());
+        renderActions = renderLoseMenu;
     }
 
     public static void makeABotMove(Player p) {

@@ -14,13 +14,13 @@ public class GameLogic {
                 return false;
             }
         }
-        System.out.print("You're baka");
+        Nyahoi.loadLoseMenu();
         return true;
     }
 
     public static boolean checkWin() {
         if (Nyahoi.players.size == 1 && Nyahoi.players.first().isYou) {
-            System.out.print("You're nyahoi");
+            Nyahoi.loadWinMenu();
             return true;
         }
         ;
@@ -52,7 +52,9 @@ public class GameLogic {
             lastPlayer.shouted = false;
             lastPlayer.moved = false;
         }
-        checkLose();
-        checkWin();
+        if (checkLose() || checkWin()) {
+            return;
+        }
+        ;
     }
 }

@@ -7,6 +7,7 @@ import uwu.misaka.reznya.entities.Player;
 public class GameLogic {
     public static Array<Player> playersInRound;
     public static Player lastPlayer = null;
+    static int lastNyahoi = 0;
 
     public static boolean checkLose() {
         for (Player p : Nyahoi.players) {
@@ -39,6 +40,9 @@ public class GameLogic {
         }
         if ((lastPlayer.moved && lastPlayer.shouted && Nyahoi.canMovement) || !Nyahoi.players.contains(lastPlayer, false)) {
             int nyahoi = playersInRound.indexOf(lastPlayer, false);
+            if (nyahoi < 0) {
+                nyahoi = lastNyahoi;
+            }
             while (true) {
                 nyahoi++;
                 if (nyahoi >= playersInRound.size) {
@@ -46,6 +50,7 @@ public class GameLogic {
                 }
                 if (Nyahoi.players.contains(playersInRound.get(nyahoi), false)) {
                     lastPlayer = playersInRound.get(nyahoi);
+                    lastNyahoi = nyahoi;
                     break;
                 }
             }

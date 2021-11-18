@@ -18,6 +18,8 @@ import uwu.misaka.reznya.service.input.MainMenuReader;
 import uwu.misaka.reznya.world.Tile;
 import uwu.misaka.reznya.world.World;
 
+import java.util.Objects;
+
 import static uwu.misaka.reznya.Reznya.*;
 
 public class Nyahoi {
@@ -204,7 +206,10 @@ public class Nyahoi {
         }
         Player target = null;
         for (Player t : players) {
-            if (length(t, p) < Bullet.maxRange * Bullet.maxRange && t != p) {
+            if (Objects.equals(p.name, "SAN") && !p.shouted && canMovement) {
+                System.out.println(length(p, t) + " " + t.name + " " + (length(p, t) <= Bullet.maxRange * Bullet.maxRange));
+            }
+            if (t != p && length(p, t) <= Bullet.maxRange * Bullet.maxRange) {
                 target = t;
                 break;
             }
@@ -232,7 +237,6 @@ public class Nyahoi {
                     p.goDown();
                     break;
                 }
-                System.out.println(p.name + " " + i + " " + left + " " + right + " " + up + " " + down + " ");
             }
         }
         if (target != null && !p.shouted && canMovement) {
@@ -262,7 +266,6 @@ public class Nyahoi {
                     p.goDown();
                     break;
                 }
-                System.out.println(p.name + " " + i + " " + left + " " + right + " " + up + " " + down + " ");
             }
         }
         if (canMovement && !p.shouted) {
@@ -271,11 +274,11 @@ public class Nyahoi {
     }
 
     public static int length(Player a, Player b) {
-        int x1 = a.x * tileSize;
-        int x2 = b.x * tileSize;
-        int y1 = a.x * tileSize;
-        int y2 = b.y * tileSize;
-        return (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+        int x1 = (a.x * tileSize) + (tileSize / 2);
+        int x2 = (b.x * tileSize) + (tileSize / 2);
+        int y1 = (a.y * tileSize) + (tileSize / 2);
+        int y2 = (b.y * tileSize) + (tileSize / 2);
+        return (((x1 - x2) * (x1 - x2)) + ((y1 - y2) * (y1 - y2)));
     }
 
 }

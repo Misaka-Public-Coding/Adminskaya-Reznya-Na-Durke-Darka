@@ -42,7 +42,6 @@ public class Bullet {
         }
         }else{
             angle= (float) Math.toDegrees(Math.atan(y_d*1f/x_d));
-            System.out.print(angle+" ");
             if(x_d<0){
                 angle-=180;
             }
@@ -129,7 +128,6 @@ public class Bullet {
             }
         } else {
             angle = (float) Math.toDegrees(Math.atan(y_d * 1f / x_d));
-            System.out.print(angle + " ");
             if (x_d < 0) {
                 angle -= 180;
             }

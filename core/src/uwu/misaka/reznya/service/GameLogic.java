@@ -41,7 +41,7 @@ public class GameLogic {
         if ((lastPlayer.moved && lastPlayer.shouted && Nyahoi.canMovement) || !Nyahoi.players.contains(lastPlayer, false)) {
             int nyahoi = playersInRound.indexOf(lastPlayer, false);
             if (nyahoi < 0) {
-                nyahoi = lastNyahoi;
+                nyahoi = lastNyahoi - 1;
             }
             while (true) {
                 nyahoi++;

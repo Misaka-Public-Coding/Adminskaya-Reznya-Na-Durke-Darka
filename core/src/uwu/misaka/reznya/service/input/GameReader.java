@@ -39,13 +39,21 @@ public class GameReader implements InputProcessor {
                 }
             });
         }
-        if(character == 100||character==1074){
-            Nyahoi.players.forEach(p->{
-                if (p.isYou && p.canGoRight() && !p.moved) {
-                    p.goRight();
-                }
-            });
-        }
+            if (character == 100 || character == 1074) {
+                Nyahoi.players.forEach(p -> {
+                    if (p.isYou && p.canGoRight() && !p.moved) {
+                        p.goRight();
+                    }
+                });
+            }
+            if (character == 32) {
+                Nyahoi.players.forEach(p -> {
+                    if (p.isYou) {
+                        p.moved = true;
+                        p.shouted = true;
+                    }
+                });
+            }
         }
         return false;
     }

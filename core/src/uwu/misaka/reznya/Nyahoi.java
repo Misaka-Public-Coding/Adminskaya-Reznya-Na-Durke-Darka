@@ -37,25 +37,31 @@ public class Nyahoi {
 
     public static Runnable renderActions = () -> ScreenUtils.clear(0, 0, 0, 1);
 
+    public static void rotatePlayer(Player p, float angle) {
+        if (p.angle != angle) {
+            if (p.angle > angle) {
+                if (p.angle - angle > 2) {
+                    p.angle -= 2;
+                } else {
+                    p.angle = angle;
+                }
+            } else {
+                if (angle - p.angle > 2) {
+                    p.angle += 2;
+                } else {
+                    p.angle = angle;
+                }
+            }
+        }
+    }
+
     public static void updateMovement() {
         if (movementBullets.size != 0) {
             canMovement = false;
             movementBullets.forEach(b -> {
                 Player p = b.author;
+                rotatePlayer(p, b.facing_angle);
                 if (p.angle != b.facing_angle) {
-                    if (p.angle > b.facing_angle) {
-                        if (p.angle - b.facing_angle > 2) {
-                            p.angle -= 2;
-                        } else {
-                            p.angle = b.facing_angle;
-                        }
-                    } else {
-                        if (b.facing_angle - p.angle > 2) {
-                            p.angle += 2;
-                        } else {
-                            p.angle = b.facing_angle;
-                        }
-                    }
                     return;
                 }
                 b.collide();
@@ -67,20 +73,8 @@ public class Nyahoi {
             canMovement = false;
             Array<Player> movementEnd = new Array<>();
             movementPlayers.forEach(p -> {
+                rotatePlayer(p, p.target_angle);
                 if (p.angle != p.target_angle) {
-                    if (p.angle > p.target_angle) {
-                        if (p.angle - p.target_angle > 2) {
-                            p.angle -= 2;
-                        } else {
-                            p.angle = p.target_angle;
-                        }
-                    }else{
-                        if(p.target_angle-p.angle>2){
-                            p.angle+=2;
-                        }else{
-                            p.angle=p.target_angle;
-                        }
-                    }
                     return;
                 }
                 if(p.x*Nyahoi.tileSize > p.map_x){
